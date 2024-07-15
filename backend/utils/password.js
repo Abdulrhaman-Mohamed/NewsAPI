@@ -5,6 +5,7 @@ const hashPassword = async (password) => {
     return  bcrypt.hash(password, +SALT_PASSWORD);
 };
 
+
 /**
  * 
  * @param {*} password 
