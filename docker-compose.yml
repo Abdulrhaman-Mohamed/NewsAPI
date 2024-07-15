@@ -1,0 +1,36 @@
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - PORT=5000
+      - REFRESH_TOKEN_SECRET='V1ypH8tRGBzKH4r0ZL6yQ4eT3tKkBb0lndIAcB2uldRYSCMnKmnexu29/yyXLur5'
+      - ACCESS_TOKEN_SECRET='E+rqmYMBhTG1k24U/NUBILtYBUHJznqQyCd/agLmf3FRreLNiDTRKYjkro3oJvx2'
+      - ACCESS_TOKEN_EXPIRES_IN=15
+      - REFRESH_TOKEN_EXPIRES_IN=7
+      - API_URL = '/api/v1'
+      - SALT_PASSWORD=7
+      - DB_CONNECTION ='mongodb://mongo:27017'
+      - DB_NAME='News-Social-App'
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+      - redis
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+  redis:
+    image: redis:7.4-rc1-alpine3.20
+    ports:
+      - "6379:6379"
